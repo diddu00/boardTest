@@ -48,6 +48,7 @@ public class AttachmentDao implements AttachmentDaoInf{
 	@Override
 	public AttachmentVo selectGetAttach(String attach_code) {
 		SqlSession session = sqlSessionFactory.openSession();
+		
 		AttachmentVo attachVo = session.selectOne("attach.selectGetAttach",attach_code);
 		session.close();
 		
