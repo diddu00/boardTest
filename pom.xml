@@ -16,11 +16,12 @@
   			<configuration>
  				<source>${java-version}</source>
  				<target>${java-version}</target>
+ 				 <skipTests>true</skipTests>
   			</configuration>
   		</plugin>
   	</plugins>
   </build>
-  
+
   <repositories>
 		<!-- ojdbc6 설정시 -->
 		<repository>
