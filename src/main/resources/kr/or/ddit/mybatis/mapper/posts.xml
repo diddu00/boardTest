@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="posts">
+	
+	<insert id="insertAttach" parameterType="attachVo">
+ 		INSERT
+		INTO attachments
+ 		 (
+		    attach_code,
+		    attach_path,
+		    attach_nm,
+		    attach_file,
+		    post_code
+		  )
+		  VALUES
+		  (
+		   'a'||LPAD(attach_sq.nextval,3,'0'),
+		    #{attach_path},
+		    #{attach_nm, jdbcType=VARCHAR},
+		    #{attach_file},
+		    (SELECT post_code
+				FROM 
+				 (
+				  SELECT post_code
+				  FROM posts
+				  ORDER BY post_code DESC
+				 )
+				WHERE ROWNUM =1
+				)
+
+		  )
+ 	</insert>
+	
+	
+ 	<select id="selectPostPageList" parameterType="map" resultType="postVo">
+ 		SELECT *
+      FROM
+      (select a.*, rownum rn
+      FROM
+      (select post_code,post_reg_dt,post_dlt,(lpad('->',(level-1)*2,'-')||post_TTL)as post_ttl,post_ctt, board_code,std_id, post_super,post_group
+      FROM POSTS
+      WHERE board_code = #{board_code}
+      START WITH post_super IS null 
+      CONNECT BY PRIOR post_code=post_super
+      ORDER SIBLINGS BY post_reg_dt desc) a)
+      WHERE rn BETWEEN (#{page}-1)*#{pageSize}+1 AND #{page}*#{pageSize}
+ 	</select>
+ 	
+ 	<select id="selectGetPostbyCode" parameterType="string" resultType="postVo">
+ 		select * from posts where post_code = #{post_code}
+ 	</select>
+ 	
+ 	<insert id="insertPost" parameterType="postVo">
+ 		 INSERT
+		INTO POSTS
+  			(post_code,post_reg_dt,post_dlt,post_ttl, post_ctt,board_code, std_id,post_super, post_group)
+	  	VALUES
+	 	 ( 'p'||LPAD(posts_sq.nextval,3,'0'),sysdate,'false',#{post_ttl},#{post_ctt},#{board_code},#{std_id},#{post_super, jdbcType=VARCHAR},'p'||LPAD(posts_sq.currval,3,'0'))
+ 	</insert>
+ 	
+ 	<update id="updatePost" parameterType="postVo">
+ 		UPDATE posts set post_dlt = #{post_dlt}, post_ttl=#{post_ttl}, post_ctt=#{post_ctt} where post_code=#{post_code}
+ 	</update>
+ 	
+ 	<select id="selectPostTnt" parameterType="string" resultType="int">
+ 		select count(*) from posts where board_code=#{board_code}
+ 	</select>
+
+</mapper>

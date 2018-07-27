@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+ 	<select id="getAllBoard" resultType="boardVo">
+ 		select * from boards order by board_code
+ 	</select>
+ 	
+ 	<insert id="insertBoardAdd" parameterType="boardVo">
+ 		insert into boards values('b'||LPAD(board_sq.nextval,3,'0'),#{board_nm}, #{board_use})
+ 	</insert>
+ 	
+ 	<update id="updateBoardUse" parameterType="boardVo">
+ 		update boards set BOARD_USE = #{board_use} where BOARD_CODE = #{board_code}
+ 	</update>
+ 	
+ 	<select id="selectUseBoard" resultType="boardVo">
+ 		select * from boards where board_use='true' order by board_code
+ 	</select>
+  	
+  	<select id="selectBoardName" parameterType="string" resultType="string">
+  		select board_nm from boards where board_code = #{board_code}
+  	</select>
+</mapper>
