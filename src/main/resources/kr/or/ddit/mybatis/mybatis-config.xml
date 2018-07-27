@@ -18,6 +18,7 @@
         <property name="username" value="pc11"/>
         <property name="password" value="java"/>
       </dataSource>
+      
     </environment>
   </environments>
   <mappers>
