@@ -20,7 +20,12 @@
 		    #{attach_path},
 		    #{attach_nm, jdbcType=VARCHAR},
 		    #{attach_file},
-		    (SELECT post_code
+		  	#{post_code}
+		  )
+ 	</insert>
+ 	
+ 	<select id="selectRecentPostCode" resultType="string">
+ 		  SELECT post_code
 				FROM 
 				 (
 				  SELECT post_code
@@ -28,10 +33,7 @@
 				  ORDER BY post_code DESC
 				 )
 				WHERE ROWNUM =1
-				)
-
-		  )
- 	</insert>
+ 	</select>
 	
 	
  	<select id="selectPostPageList" parameterType="map" resultType="postVo">
@@ -61,7 +63,7 @@
  	</insert>
  	
  	<update id="updatePost" parameterType="postVo">
- 		UPDATE posts set post_dlt = #{post_dlt}, post_ttl=#{post_ttl}, post_ctt=#{post_ctt} where post_code=#{post_code}
+ 		UPDATE posts set post_dlt = #{post_dlt}, post_ttl=#{post_ttl,jdbcType=VARCHAR}, post_ctt=#{post_ctt} where post_code=#{post_code}
  	</update>
  	
  	<select id="selectPostTnt" parameterType="string" resultType="int">

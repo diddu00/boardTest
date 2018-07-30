@@ -65,7 +65,9 @@ $(document).ready(function() {
 
 			// 이부분에 에디터 validation 검증
 			if(validation()) {
-				$("#frm").submit();
+				if(frmCheck()){
+					$("#frm").submit();
+				}
 			}
 		}
 	})
@@ -76,6 +78,8 @@ $(document).ready(function() {
 			location.href = "/postList?board_code="+$("#board_code").val()+"&page="+$("#page").val();
 		}
 	});  
+	
+	
 });
 
 // 필수값 Check
@@ -90,6 +94,48 @@ function validation(){
 	return true;
 }
 
+
+var oTbl;
+var filenum = 0;
+//Row 추가
+function insRow() {
+  if(filenum==5){
+	  alert("파일은 최대 5개까지만 첨부가 가능합니다.");
+	  return;
+	}
+  oTbl = document.getElementById("addTable");
+  var oRow = oTbl.insertRow();
+  oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+  var oCell = oRow.insertCell();
+
+  //삽입될 Form Tag
+  var frmTag = "<div class=\"form-group\"><input type=\"file\" id=\"uploadFile\" name=\"uploadFile"+filenum+"\">";
+  frmTag += " <input type=button value=\"삭제\" onClick=\"removeRow()\" style=\"cursor:hand\"></div>";
+  filenum++;
+  oCell.innerHTML = frmTag;
+  
+}
+	//Row 삭제
+	function removeRow() {
+	  oTbl.deleteRow(oTbl.clickedRowIndex);
+	  filenum--;
+	}   
+
+function frmCheck(){
+  var frm = document.form;
+  
+  for( var i = 0; i <= frm.elements.length-1 ; i++ ){
+     if( frm.elements[i].id == "uploadFile" )
+     {
+         if( !frm.elements[i].value ){
+             alert("첨가파일을 선택하지 않았습니다.");
+                 frm.elements[i].focus();
+	 		return false;
+          }
+      }
+   }
+ 	return true;
+ }
 </script>
 </head>
 <body>
@@ -100,25 +146,50 @@ function validation(){
 		<%@include file="/common/left.jsp" %>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-  <form action="/postAdd" method="get" id="frm" style="text-align: justify;">
+  <form action="/postAdd" id="frm" name="form" enctype="multipart/form-data" style="text-align: justify;"class="form-horizontal" role="form" method="post" >
 	<div class="form-group">
-    <label for="exampleInputEmail1">제목</label>
-    <input type="text" style="width: 50%;" class="form-control" id="post_ttl" name="post_ttl" placeholder="제목을 입력하세요">
+    &emsp;<label for="exampleInputEmail1">제목</label>
+    &emsp;<input type="text" style="width: 50%;" class="form-control" id="post_ttl" name="post_ttl" placeholder="제목을 입력하세요">
  	</div>
 	작성자 <br><label>${studentVo.std_id}</label><br>
 	<input type="hidden" id="std_id" name="std_id" value="${studentVo.std_id}">
 	<input type="hidden" id="board_code" name="board_code" value="${param.board_code}">
 	<input type="hidden" id="page" name="page" value="${param.page}">
+	<input type="hidden" id="post_super" name="post_super" value="${param.post_super}">
 	작성일 <br><label><fmt:formatDate value="<%=new Date()%>" pattern="yyyy-MM-dd"/></label><br>
 	<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea> 
 	<input type="button" id="savebutton" value="저장" />
 	<input type="button" id="cancelbutton" value="취소"/>
+  	<br>
+  	<br>
+	<table width="400" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2" align="left" bgcolor="#FFFFFF">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+         <td colspan="5" bgcolor="#FFFFFF" height="25" align="left">
+         <input name="addButton" type="button" style="cursor:hand" onClick="insRow()" value="추가">
+         <font color="#FF0000">*</font>추가버튼을 클릭해 보세요.</td>
+        </tr>
+        <tr>
+        <tr>
+        	<td>&emsp;&emsp;</td>
+        </tr>
+         <td height="25">
+           <table id="addTable"  cellspacing="2" cellpadding="2" bgcolor="#FFFFFF" border="0">
+            <tr>
+              <td align="left"></td>
+            </tr>
+          </table>
+          </td>
+        </tr>
+       </table>
+      </td>
+   </tr>
+ </table>
+  
   </form>
-	<form action="/fileUpload" class="form-horizontal" role="form" method="post" enctype="multipart/form-data">
-			<input type="file" name="uploadFile"/><br>
-	</form>
-
-
+  
 			</div>
 		</div>
 	</div>

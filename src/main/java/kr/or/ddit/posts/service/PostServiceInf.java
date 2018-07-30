@@ -9,6 +9,16 @@ import kr.or.ddit.posts.model.PostVo;
 public interface PostServiceInf {
 	/**
 	 * 
+	* Method : selectRecentPostCode
+	* 최초작성일 : 2018. 7. 30.
+	* 작성자 : PC11
+	* 변경이력 :
+	* @return
+	* Method 설명 : 가장 최근의 post_code 반환
+	 */
+	String selectRecentPostCode();
+	/**
+	 * 
 	* Method : selectPostPageList
 	* 최초작성일 : 2018. 7. 20.
 	* 작성자 : PC11

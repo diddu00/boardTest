@@ -46,8 +46,8 @@
 								<hr>
 								</c:if>
 							</div>
-				<form id="frm" class="form-horizontal" role="form" action="/postEdit" method="get">
-					<input type="hidden" id="editValue" name="editValue" value="${postVo.post_code}"/>
+				<form id="frm" class="form-horizontal" role="form" action="/postDetail" method="post">
+					<input type="hidden" id="editValue" name="id" value="${postVo.post_code}"/>
 					<input type="hidden" name="page" value="${page}"/>
 					<div rows="10" cols="100" style="width:766px; height:412px;">${postVo.post_ctt}</div>
 				</form>
@@ -59,7 +59,37 @@
 					<input type="button" id="edit" class="btn btn-default pull-left" value="수정">
 					<input type="button" id="delet" class="btn btn-default pull-left" value="삭제">
 				</c:if>
-					<a href="#" class="btn btn-default pull-left">답글</a>
+					<a href="/posts/postAdd.jsp?post_super=${postVo.post_code}&board_code=${postVo.board_code}&page=${page}&pageSize=10" class="btn btn-default pull-left">답글</a>
+			<br>
+			<br>
+				           	<hr>
+				<c:choose>
+	  				<c:when test="${commentList.size() != 0}">
+						<c:forEach items="${commentList}" var="comment">
+			  				<blockquote>
+		  						<form id="commentDltFrm" action="/commentEdit" method="post">
+			  					<h6><strong>${comment.std_id}</strong><small><fmt:formatDate value="${comment.comment_reg_dt}" pattern="yyyy-MM-dd"/></small></h6>
+			  						<label  style="font-size:10px;margin-right:10px">${comment.comment_ctt}</label><c:if test="${comment.std_id == studentVo.std_id}"><input type="submit" class="btn btn-default" value="삭제"/></c:if>
+			  						<input type="hidden" name="comment_id" value="${comment.comment_code}">
+			  						<input type="hidden" name="id" value="${postVo.post_code}"/>
+  									<input type="hidden" name="page" value="${page}"/>
+			  					</form>
+			  				</blockquote>			
+						</c:forEach>
+				       </c:when>
+				       <c:otherwise>
+				   			등록된 댓글이 없습니다.
+				       </c:otherwise>
+				  </c:choose>
+  				<hr>
+			<form id="commentFrm" action="/commentEdit" method="get">
+  				<h5>댓글쓰기</h5>
+  				<div><textarea name="comment_ctt" class="form-control"  style="resize: none; width:80%;" rows="3"></textarea>
+  				<input type="submit" class="btn btn-default" value="댓글입력">
+  				</div>
+  				<input type="hidden" name="id" value="${postVo.post_code}"/>
+  				<input type="hidden" name="page" value="${page}"/>
+ 		 	</form>
 			</div>
 		</div>
 	</div>

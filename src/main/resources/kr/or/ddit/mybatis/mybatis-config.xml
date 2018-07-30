@@ -8,6 +8,7 @@
   	<typeAlias type="kr.or.ddit.boards.model.BoardVo" alias="boardVo"/>
   	<typeAlias type="kr.or.ddit.posts.model.PostVo" alias="postVo"/>
   	<typeAlias type="kr.or.ddit.attachments.model.AttachmentVo" alias="attachVo"/>
+  	<typeAlias type="kr.or.ddit.comments.model.CommentVo" alias="commentVo"/>
   </typeAliases>
   <environments default="development">
     <environment id="development">
@@ -26,6 +27,7 @@
     <mapper resource="kr/or/ddit/mybatis/mapper/boards.xml"/>
     <mapper resource="kr/or/ddit/mybatis/mapper/posts.xml"/>
     <mapper resource="kr/or/ddit/mybatis/mapper/attachments.xml"/>    
+    <mapper resource="kr/or/ddit/mybatis/mapper/comments.xml"/>    
   </mappers>
   
 </configuration>

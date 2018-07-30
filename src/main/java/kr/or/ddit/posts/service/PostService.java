@@ -89,4 +89,9 @@ public class PostService implements PostServiceInf {
 		return postDao.insertAttach(attachVo);
 	}
 
+	@Override
+	public String selectRecentPostCode() {
+		return postDao.selectRecentPostCode();
+	}
+
 }

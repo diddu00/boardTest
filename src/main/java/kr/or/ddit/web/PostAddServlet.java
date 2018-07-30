@@ -40,16 +40,18 @@ public class PostAddServlet extends HttpServlet {
 		PostVo postVo = new PostVo();
 		postVo.setBoard_code(request.getParameter("board_code"));
 		postVo.setPost_ctt(request.getParameter("smarteditor"));
+		postVo.setPost_super(request.getParameter("post_super"));
 		postVo.setPost_ttl(request.getParameter("post_ttl"));
 		postVo.setStd_id(request.getParameter("std_id"));
 		postService.insertPost(postVo);
+		String post_code = postService.selectRecentPostCode();
 		
 		Collection<Part> parts=request.getParts();
 		//--> 넘어온 파라미터들 Collection(set,list 등등)에 나눠서 넣음(배열처럼)
 
 		for(Part part:parts ){
 			AttachmentVo attachVo = new AttachmentVo();
-			attachVo.setPost_code(postVo.getPost_code());
+			attachVo.setPost_code(post_code);
 			String contentDisposition = part.getHeader("Content-Disposition");
 			System.out.println("contentDispostion : "+contentDisposition);
 			if(contentDisposition!=null){

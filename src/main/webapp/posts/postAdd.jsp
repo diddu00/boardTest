@@ -109,8 +109,8 @@ function insRow() {
   var oCell = oRow.insertCell();
 
   //삽입될 Form Tag
-  var frmTag = "<input type=\"file\" id=\"uploadFile\" name=\"uploadFile"+filenum+"\">  ";
-  frmTag += "<input type=button value=\"삭제\" onClick=\"removeRow()\" style=\"cursor:hand\">";
+  var frmTag = "<div class=\"form-group\"><input type=\"file\" id=\"uploadFile\" name=\"uploadFile"+filenum+"\">";
+  frmTag += " <input type=button value=\"삭제\" onClick=\"removeRow()\" style=\"cursor:hand\"></div>";
   filenum++;
   oCell.innerHTML = frmTag;
   
@@ -148,13 +148,14 @@ function frmCheck(){
 
   <form action="/postAdd" id="frm" name="form" enctype="multipart/form-data" style="text-align: justify;"class="form-horizontal" role="form" method="post" >
 	<div class="form-group">
-    <label for="exampleInputEmail1">제목</label>
-    <input type="text" style="width: 50%;" class="form-control" id="post_ttl" name="post_ttl" placeholder="제목을 입력하세요">
+    &emsp;<label for="exampleInputEmail1">제목</label>
+    &emsp;<input type="text" style="width: 50%;" class="form-control" id="post_ttl" name="post_ttl" placeholder="제목을 입력하세요">
  	</div>
 	작성자 <br><label>${studentVo.std_id}</label><br>
 	<input type="hidden" id="std_id" name="std_id" value="${studentVo.std_id}">
 	<input type="hidden" id="board_code" name="board_code" value="${param.board_code}">
 	<input type="hidden" id="page" name="page" value="${param.page}">
+	<input type="hidden" id="post_super" name="post_super" value="${param.post_super}">
 	작성일 <br><label><fmt:formatDate value="<%=new Date()%>" pattern="yyyy-MM-dd"/></label><br>
 	<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea> 
 	<input type="button" id="savebutton" value="저장" />
@@ -171,12 +172,16 @@ function frmCheck(){
          <font color="#FF0000">*</font>추가버튼을 클릭해 보세요.</td>
         </tr>
         <tr>
+        <tr>
+        	<td>&emsp;&emsp;</td>
+        </tr>
          <td height="25">
-           <table id="addTable" width="400" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" border="0">
+           <table id="addTable"  cellspacing="2" cellpadding="2" bgcolor="#FFFFFF" border="0">
             <tr>
               <td align="left"></td>
             </tr>
-          </table></td>
+          </table>
+          </td>
         </tr>
        </table>
       </td>
@@ -184,6 +189,7 @@ function frmCheck(){
  </table>
   
   </form>
+  
 			</div>
 		</div>
 	</div>

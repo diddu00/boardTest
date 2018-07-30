@@ -91,5 +91,14 @@ public class PostDao implements PostDaoInf{
 		
 		return result;
 	}
+
+	@Override
+	public String selectRecentPostCode() {
+		SqlSession session = sqlSessionFactory.openSession();
+		String post_code = session.selectOne("posts.selectRecentPostCode");
+		session.close();
+		
+		return post_code;
+	}
 	
 }
