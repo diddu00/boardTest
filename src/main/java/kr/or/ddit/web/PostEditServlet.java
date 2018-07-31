@@ -21,6 +21,19 @@ public class PostEditServlet extends HttpServlet {
        
     //수정
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String post_code=request.getParameter("id"); //post_code
+		String post_ttl=request.getParameter("post_ttl");
+		String post_ctt=request.getParameter("smarteditor");
+	
+		PostServiceInf postService = PostService.getInstance();
+		PostVo postVo=postService.selectGetPostbyCode(post_code);
+		postVo.setPost_ttl(post_ttl);
+		postVo.setPost_ctt(post_ctt);
+		
+		postService.updatePost(postVo);
+		
+		
+		request.getRequestDispatcher("/postDetail").forward(request, response);
 		
 	}
 

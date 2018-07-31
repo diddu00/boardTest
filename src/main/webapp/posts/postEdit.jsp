@@ -146,47 +146,22 @@ function frmCheck(){
 		<%@include file="/common/left.jsp" %>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
-  <form action="/postAdd" id="frm" name="form" enctype="multipart/form-data" style="text-align: justify;"class="form-horizontal" role="form" method="post" >
+  <form action="/postEdit" id="frm" name="form"  style="text-align: justify;"class="form-horizontal" role="form" method="get" >
 	<div class="form-group">
     &emsp;<label for="exampleInputEmail1">제목</label>
-    &emsp;<input type="text" style="width: 50%;" class="form-control" id="post_ttl" name="post_ttl" placeholder="제목을 입력하세요">
+    &emsp;<input type="text" style="width: 50%;" class="form-control" id="post_ttl" name="post_ttl" value="${postVo.post_ttl}">
  	</div>
 	작성자 <br><label>${studentVo.std_id}</label><br>
 	<input type="hidden" id="std_id" name="std_id" value="${studentVo.std_id}">
-	<input type="hidden" id="board_code" name="board_code" value="${param.board_code}">
-	<input type="hidden" id="page" name="page" value="${param.page}">
-	<input type="hidden" id="post_super" name="post_super" value="${param.post_super}">
-	작성일 <br><label><fmt:formatDate value="<%=new Date()%>" pattern="yyyy-MM-dd"/></label><br>
-	<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea> 
-	<input type="button" id="savebutton" value="저장" />
+	<input type="hidden" id="page" name="page" value="${page}">
+	<input type="hidden" id="post_code" name="id" value="${postVo.post_code}">
+	작성일 <br><label><fmt:formatDate value="${postVo.post_reg_dt}" pattern="yyyy-MM-dd"/></label><br>
+	<textarea name="smarteditor" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;">${postVo.post_ctt}</textarea> 
+	<input type="button" id="savebutton" value="수정" />
 	<input type="button" id="cancelbutton" value="취소"/>
   	<br>
   	<br>
-	<table width="400" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td colspan="2" align="left" bgcolor="#FFFFFF">
-      <table width="100%" border="0" cellpadding="0" cellspacing="0">
-        <tr>
-         <td colspan="5" bgcolor="#FFFFFF" height="25" align="left">
-         <input name="addButton" type="button" style="cursor:hand" onClick="insRow()" value="추가">
-         <font color="#FF0000">*</font>추가버튼을 클릭해 보세요.</td>
-        </tr>
-        <tr>
-        <tr>
-        	<td>&emsp;&emsp;</td>
-        </tr>
-         <td height="25">
-           <table id="addTable"  cellspacing="2" cellpadding="2" bgcolor="#FFFFFF" border="0">
-            <tr>
-              <td align="left"></td>
-            </tr>
-          </table>
-          </td>
-        </tr>
-       </table>
-      </td>
-   </tr>
- </table>
+	
   
   </form>
   

@@ -37,15 +37,13 @@
 						 	<span style="text-align:left;">작성자 : ${postVo.std_id}&emsp;&emsp;&emsp;</span>
 						 	<span style="text-align:right;">작성일 : <fmt:formatDate value="${postVo.post_reg_dt}" pattern="yyyy-MM-dd"/></span>
 						</div>
-							<div class="row">
 								<c:if test="${attachList != null}">
-									&emsp;&emsp;첨부파일<br><br>
+									&emsp;&emsp;첨부파일
 									<c:forEach items="${attachList}" var="attach">
 										&emsp;&emsp;<a href="/attachDownload?attach_code=${attach.attach_code}&post_code=${postVo.post_code}&page=${page}" >${attach.attach_nm}</a><br>
 									</c:forEach>
 								<hr>
 								</c:if>
-							</div>
 				<form id="frm" class="form-horizontal" role="form" action="/postDetail" method="post">
 					<input type="hidden" id="editValue" name="id" value="${postVo.post_code}"/>
 					<input type="hidden" name="page" value="${page}"/>
