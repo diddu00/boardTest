@@ -41,10 +41,10 @@ public class PostService implements PostServiceInf {
 
 		StringBuilder pageNavi = new StringBuilder();
 		pageNavi.append("<li><a href=\"postList?board_code="+board_code+"&page=1"
-				+ "&pageSize=10\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>");
+				+ "&pageSize=10\" "+(activePage==1?"disabled":"")+" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>");
 		pageNavi.append("<li><a href=\"postList?board_code="+board_code+"&page="
 				+ (activePage > 1 ? activePage - 1 : 1)
-				+ "&pageSize=10\" aria-label=\"Previous\"><span aria-hidden=\"true\">&lt;</span></a></li>");
+				+ "&pageSize=10\" "+(activePage==1?"disabled":"")+"aria-label=\"Previous\"><span aria-hidden=\"true\">&lt;</span></a></li>");
 		for (int i = 1; i <= pagingnationSize; i++) {
 			String activeClass = "";
 			if (i == activePage)
@@ -60,9 +60,9 @@ public class PostService implements PostServiceInf {
 		pageNavi.append("<li><a href=\"/postList?board_code="+board_code+"&page="
 				+ (activePage < pagingnationSize ? activePage + 1
 						: pagingnationSize)
-				+ "&pageSize=10\" aria-label=\"Next\"><span aria-hidden=\"true\">&gt;</span></a></li>");
+				+ "&pageSize=10\" "+(activePage==pagingnationSize?"disabled":"")+"aria-label=\"Next\"><span aria-hidden=\"true\">&gt;</span></a></li>");
 		pageNavi.append("<li><a href=\"/postList?board_code="+board_code+"&page="+pagingnationSize
-				+ "&pageSize=10\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>");
+				+ "&pageSize=10\" "+(activePage==pagingnationSize?"disabled":"")+" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>");
 		return pageNavi.toString();
 
 	}
